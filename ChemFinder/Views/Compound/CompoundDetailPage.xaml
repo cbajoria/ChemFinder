@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ChemFinder.CompoundDetailPage" Title="Compound Detail" BackgroundColor="#F0F0F0" >
+	<ContentPage.Content>
+		
+		<ScrollView>
+			<StackLayout>
+			 <ActivityIndicator   IsVisible="{Binding IsLoad}" IsRunning="{Binding IsLoad}" Color="Black" />
+		
+		<Grid Padding="10">
+
+		 <Grid.RowDefinitions >
+
+		   <RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto"  />
+			<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />	
+						<RowDefinition Height="Auto" />	
+					<RowDefinition Height="Auto" />	
+						<RowDefinition Height="Auto" />	
+					<RowDefinition Height="Auto" />	
+					<RowDefinition Height="Auto" />	
+						<RowDefinition Height="Auto" />	
+					<RowDefinition Height="Auto" />	
+	 </Grid.RowDefinitions>
+
+		
+	<Label Text="{Binding ChemName}" Grid.Row="0" TextColor="#eb3c96" ></Label>
+
+					
+	<StackLayout x:Name="TopSection" BackgroundColor="White" Grid.Row="1" HorizontalOptions="FillAndExpand"  VerticalOptions="Fill">		
+					</StackLayout>
+
+			<StackLayout  Grid.Row="2" BackgroundColor="White" x:Name="Description"></StackLayout>
+
+					
+				
+			<StackLayout x:Name="Image" Grid.Row="3"   IsVisible="{Binding IsImageVisible}">
+			<Label Text="2D Structure" FontSize="15" TextColor="#eb3c96"> </Label>
+			<StackLayout BackgroundColor="#f5f5f5">
+					<Image Source="{Binding Imageurl2D}"  VerticalOptions="FillAndExpand">
+						<Image.GestureRecognizers>
+       					 <TapGestureRecognizer Command="{Binding GetChemImageCommand}" CommandParameter="{Binding ChemId}"/>
+   						 </Image.GestureRecognizers>
+						</Image>
+	
+			</StackLayout>
+			</StackLayout>
+
+
+
+			<StackLayout x:Name="CompoundDescriptorSection"  Grid.Row="4" >
+
+			<Label Text="Names and Identifiers:Computed Descriptors" FontSize="15" TextColor="#eb3c96"  ></Label>
+						<!--<Label Text="Computed Descriptors" FontSize="12" TextColor="#eb3c96"></Label>-->
+					<StackLayout x:Name="CompoundDescriptor" BackgroundColor="White">
+					</StackLayout>
+				</StackLayout>
+
+
+				<StackLayout x:Name="OtherIdentifiersSection"  Grid.Row="5" >
+
+			<Label Text="Names and Identifiers:Other Identifiers" FontSize="15" TextColor="#eb3c96"  ></Label>
+					<StackLayout x:Name="OtherIdentifiers" BackgroundColor="White">
+					</StackLayout>
+				</StackLayout>
+
+				
+				<StackLayout  x:Name="MeShSynonymsSection" Grid.Row="6" >
+
+				<Label Text="Synonyms:MeShSynonyms" FontSize="15" TextColor="#eb3c96"  ></Label>
+						
+					<StackLayout  Padding="10,2,2,2"  x:Name="MeShSynonyms" BackgroundColor="White">
+<!--
+		<ListView   ItemsSource="{Binding MeshSynonyms}" RowHeight="32"  SeparatorVisibility="Default" SeparatorColor="#F8F8F8">
+				<ListView.ItemTemplate>
+						<DataTemplate>		
+							<ViewCell>
+										<StackLayout Padding="10,0,0,0" VerticalOptions="Center">
+							  <Label Text="{Binding .}" TextColor="Black" VerticalOptions="Center" FontSize="12" ></Label>
+											</StackLayout>
+							</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+-->
+
+					</StackLayout>
+				</StackLayout>
+
+
+
+					<StackLayout   x:Name="DepositorSuppliedSynonymsSection" Grid.Row="7" >
+
+				<Label Text="Synonyms:Depositor-Supplied Synonyms" FontSize="15" TextColor="#eb3c96"  ></Label>
+				
+					
+				<StackLayout  Padding="10,2,2,2" x:Name="DepositorSuppliedSynonyms" BackgroundColor="White">
+			<!--			<ListView RowHeight="32"  ItemsSource="{Binding DepositorSuppliedSynonyms}"  SeparatorVisibility="Default" SeparatorColor="#F8F8F8">
+				<ListView.ItemTemplate>
+						<DataTemplate>		
+							<ViewCell>
+										<StackLayout Padding="10,0,0,0" VerticalOptions="Center">
+							  <Label Text="{Binding .}"  TextColor="Black" VerticalOptions="Center" FontSize="12" ></Label>
+											</StackLayout>
+							</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>-->
+
+
+					</StackLayout>
+				</StackLayout>
+
+
+
+
+					<StackLayout x:Name="ChemicalAndPhysicalSection"  Grid.Row="8" >
+						<Label Text="Chemical and Physical Properties" FontSize="15" TextColor="#eb3c96"></Label>
+					<StackLayout x:Name="ChemicalAndPhysical" BackgroundColor="White">
+			<ListView   ItemsSource="{Binding ChemicalAndPhysical}" RowHeight="32"  SeparatorVisibility="Default" SeparatorColor="#F8F8F8">
+				<ListView.ItemTemplate>
+						<DataTemplate>		
+							<ViewCell>
+							<Grid Padding="10,3,3,3">
+							 <Grid.RowDefinitions >
+							    <RowDefinition Height="Auto" />
+							  </Grid.RowDefinitions>
+							  <Grid.ColumnDefinitions>
+							    <ColumnDefinition Width="0.6*" />
+							    <ColumnDefinition Width="0.4*" />
+							  </Grid.ColumnDefinitions>
+							  <Label Text="{Binding Label}" Grid.Row="0" Grid.Column="0" TextColor="Black" FontSize="12" ></Label> 
+							<Label Text="{Binding Value}" TextColor="Black" FontSize="12"  Grid.Row="0" Grid.Column="1" ></Label> 
+							</Grid>
+							
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+
+
+
+
+					</StackLayout>
+				</StackLayout>
+				
+
+					<StackLayout x:Name="ExperimentalPropertiesSection" Grid.Row="9" >
+						<Label Text="Experimental Properties" FontSize="15" TextColor="#eb3c96"></Label>
+					<StackLayout x:Name="ExperimentalProperties" BackgroundColor="White">
+
+						<ListView  RowHeight="30"  ItemsSource="{Binding ExperimentalProperties}" VerticalOptions="Fill"  SeparatorVisibility="Default" SeparatorColor="#F8F8F8">
+				<ListView.ItemTemplate>
+						<DataTemplate>		
+							<ViewCell>
+							<Grid Padding="10,3,3,3">
+							 <Grid.RowDefinitions >
+							    <RowDefinition Height="Auto" />
+							  </Grid.RowDefinitions>
+							  <Grid.ColumnDefinitions>
+							    <ColumnDefinition Width="0.6*" />
+							    <ColumnDefinition Width="0.4*" />
+							  </Grid.ColumnDefinitions>
+							  <Label Text="{Binding Label}" Grid.Row="0" Grid.Column="0" TextColor="Black" FontSize="12" ></Label> 
+							<Label Text="{Binding Value}" TextColor="Black" FontSize="12"  Grid.Row="0" Grid.Column="1" ></Label> 
+							</Grid>
+							
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+					</StackLayout>
+				</StackLayout>
+
+			<StackLayout x:Name="DrugAndMedicationInformationSection" Grid.Row="10" >
+						<Label Text="Drug and Medication Information" FontSize="15" TextColor="#eb3c96"></Label>
+					<StackLayout x:Name="DrugAndMedicationInformation" BackgroundColor="White">
+					</StackLayout>
+				</StackLayout>
+				</Grid>
+				</StackLayout>
+
+
+			
+		</ScrollView>
+
+	</ContentPage.Content>
+</ContentPage>

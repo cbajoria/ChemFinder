@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ChemFinder.BioAssayDetailPage" Title="BioAssay Detail" BackgroundColor="#F0F0F0" >
+	<ContentPage.Content>
+		<ScrollView>
+
+		<Grid Padding="10">
+
+		 <Grid.RowDefinitions >
+		   <RowDefinition Height="Auto" />
+			<RowDefinition Height="350"  />
+			<RowDefinition Height="Auto" />
+	 </Grid.RowDefinitions>
+
+
+	<Label Text="{Binding ChemName}" Grid.Row="0" TextColor="#eb3c96" ></Label>
+				
+	<StackLayout BackgroundColor="White" Grid.Row="1"   VerticalOptions="Fill">
+	<ListView   ItemsSource="{Binding ItemDetailsInList}" VerticalOptions="Fill" HasUnevenRows="true" SeparatorVisibility="None">
+
+				<ListView.ItemTemplate>
+						<DataTemplate>		
+							<ViewCell>
+							<!--	<StackLayout Orientation="Horizontal" Padding="10,3,0,0">
+										<Label WidthRequest="120" Text="{Binding label}" TextColor="Black" FontSize="12" ></Label> 
+										<Label Text=":" TextColor="Black" FontSize="12" ></Label> 
+										<Label Text="{Binding value}" TextColor="Black" FontSize="12" ></Label> 
+									</StackLayout>-->
+
+							<Grid Padding="10,3,3,3">
+							 <Grid.RowDefinitions >
+							    <RowDefinition Height="Auto" />
+							  </Grid.RowDefinitions>
+							  <Grid.ColumnDefinitions>
+							    <ColumnDefinition Width="0.4*" />
+							
+							    <ColumnDefinition Width="0.6*" />
+							  </Grid.ColumnDefinitions>
+
+							  <Label WidthRequest="120" Text="{Binding Label}" Grid.Row="0" Grid.Column="0" TextColor="Black" FontSize="12" ></Label> 
+
+							<Label Text=":" TextColor="Black" FontSize="12"  Grid.Row="0" Grid.Column="0" ></Label> 
+							<Label Text="{Binding Value}" TextColor="Black" FontSize="12"  Grid.Row="0" Grid.Column="1" ></Label> 
+							</Grid>
+							
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+				<!-- <ListView.GroupHeaderTemplate >
+                <DataTemplate>
+						<ViewCell >
+
+							
+						<StackLayout Padding="10">
+						<Label Text="{Binding ChemName}" FontSize="15" TextColor="#eb3c96" LineBreakMode="TailTruncation" />
+						</StackLayout>
+
+						</ViewCell>
+                   
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>-->
+
+			</ListView>
+			</StackLayout>
+			<StackLayout Grid.Row="2"   IsVisible="{Binding IsImageVisible}">
+			<Label Text="2D Structure" FontSize="15" TextColor="#eb3c96"> </Label>
+			<StackLayout BackgroundColor="#f5f5f5">
+					<Image Source="{Binding Imageurl2D}"  VerticalOptions="FillAndExpand">
+						<Image.GestureRecognizers>
+       					 <TapGestureRecognizer Command="{Binding GetChemImageCommand}" CommandParameter="{Binding ChemId}"/>
+   						 </Image.GestureRecognizers>
+						</Image>
+	
+			</StackLayout>
+			</StackLayout>
+		
+				</Grid>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

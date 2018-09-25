@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ChemFinder.SearchPage"
+
+	xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"  BackgroundColor="#F0F0F0" Title="Chem Finder" >
+   <ContentPage.Content>
+	<ScrollView>
+		<StackLayout>
+		<Grid BackgroundColor="#ffcb04">
+							 <Grid.RowDefinitions >
+							    <RowDefinition Height="40" />
+							  </Grid.RowDefinitions>
+							  <Grid.ColumnDefinitions>
+							    <ColumnDefinition Width="0.33*" />
+							    <ColumnDefinition Width="0.33*" />
+					             <ColumnDefinition Width="0.33*" />
+							  </Grid.ColumnDefinitions>
+
+							<ContentView Grid.Row="0" Grid.Column="0" x:Name="cntSubstance">
+						       
+									<Button Image="substance.png" x:Name="btnSubstance" Text="Substance"  FontSize="11"  TextColor="Black" Clicked="btnSubstance_Clicked"></Button>
+				            
+				            </ContentView>
+				            <ContentView Grid.Row="0" Grid.Column="1" BackgroundColor="White"  x:Name="cntCompound">
+					             
+					              <Button Image="compound.png" x:Name="btnCompound" Text="Compound"   FontSize="11" TextColor="Black" Clicked="btnCompound_Clicked"></Button>
+				            </ContentView>
+				            <ContentView Grid.Row="0" Grid.Column="2" x:Name="cntAssay">
+					            
+								 <Button Image="bioassay.png"  x:Name="btnAssay" Text="BioAssay" FontSize="11" TextColor="Black" Clicked="btnAssay_Clicked"></Button>
+				            </ContentView>
+			</Grid>
+			<StackLayout Padding="5">
+				<Grid Padding="5">
+							 <Grid.RowDefinitions >
+							    <RowDefinition Height="30" />
+							  </Grid.RowDefinitions>
+							  <Grid.ColumnDefinitions>
+							    <ColumnDefinition Width="0.8*" />
+							    <ColumnDefinition Width="0.2*" />
+							  </Grid.ColumnDefinitions>
+
+
+
+					<autocomplete:SfAutoComplete Grid.Row="0"   Grid.Column="0" TextSize="10" SelectionChanged="Handle_SelectionChanged"  Watermark="Type to search" AutoCompleteSource="{Binding SearchSuggestion}" x:Name="autoComplete" SuggestionMode="Contains" AutoCompleteMode="Suggest" MinimumPrefixCharacters="1"  ValueChanged="Handle_ValueChanged" />
+		         <!--  <Button Grid.Row="0" Grid.Column="1" Text="{Binding ButtonValue}"  Command="{Binding GetItemListCommand}" CommandParameter="{Binding Source={x:Reference autoComplete}, Path=Text}" ></Button>
+--> 
+						<Button x:Name="Searchbtn" Text="{Binding ButtonValue}" Grid.Row="0" Grid.Column="1"   Clicked="Handle_Clicked" ></Button>
+			</Grid>
+			<StackLayout Orientation="Horizontal">
+			<Label x:Name="lblRecords"  Text="No. Of Records :" IsVisible="{Binding IsVisible}" FontSize="10" TextColor="Black"/>
+			<Label x:Name="lblNoRecords" Text="{Binding TotalRecords}"  IsVisible="{Binding IsVisible}" FontSize="10" TextColor="Black"></Label>
+		</StackLayout>
+		    <ActivityIndicator IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" Color="Black" />
+
+  			<ListView  x:Name="lstData" IsVisible="{Binding IsVisible}" SeparatorVisibility="None" IsGroupingEnabled="true" GroupDisplayBinding="{Binding ChemName}" ItemsSource="{Binding ItemDetailsInList}"  HasUnevenRows="true" ItemTapped="Handle_ItemTapped" >
+				<ListView.ItemTemplate>
+						<DataTemplate>		
+							<ViewCell>
+							<!--	<StackLayout Orientation="Horizontal" Padding="10,3,0,0">
+										<Label WidthRequest="120" Text="{Binding label}" TextColor="Black" FontSize="12" ></Label> 
+										<Label Text=":" TextColor="Black" FontSize="12" ></Label> 
+										<Label Text="{Binding value}" TextColor="Black" FontSize="12" ></Label> 
+									</StackLayout>-->
+								<StackLayout Margin="0,7,0,5" Padding="0,0,0,5">
+							<Grid Padding="10,5,3,3">
+							 <Grid.RowDefinitions >
+							    <RowDefinition Height="Auto" />
+								
+							  </Grid.RowDefinitions>
+							  <Grid.ColumnDefinitions>
+							    <ColumnDefinition Width="0.4*" />
+							
+							    <ColumnDefinition Width="0.6*" />
+									
+							  </Grid.ColumnDefinitions>
+
+							  <Label WidthRequest="120" Text="{Binding Label}" Grid.Row="0" Grid.Column="0" TextColor="Black" FontSize="12" ></Label> 
+
+							<Label Text=":" TextColor="Black" FontSize="12"  Grid.Row="0" Grid.Column="0" ></Label> 
+							<Label Text="{Binding Value}" TextColor="Black" FontSize="12"  Grid.Row="0" Grid.Column="1"  ></Label> 
+								
+							</Grid>
+						</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+				 <ListView.GroupHeaderTemplate >
+                <DataTemplate>
+						<ViewCell >
+			<StackLayout>
+						<BoxView HeightRequest="1" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand"></BoxView>
+					<Grid BackgroundColor="White" Padding="5">
+							 <Grid.RowDefinitions>
+							    <RowDefinition Height="41" />
+							  </Grid.RowDefinitions>
+							  <Grid.ColumnDefinitions>
+							    <ColumnDefinition Width="auto" />
+							    <ColumnDefinition Width="*" />
+							  </Grid.ColumnDefinitions>
+						
+						 <BoxView BackgroundColor="#15BECE" HeightRequest="40" Grid.Row="0" Grid.Column="0" IsVisible="{Binding IsImageVisible}"></BoxView>
+						 <StackLayout Padding="0.5"  Grid.Row="0" Grid.Column="0">
+						<Image Source="{Binding Imageurl2D}"  HeightRequest="40" VerticalOptions="FillAndExpand" IsVisible="{Binding IsImageVisible}">
+						<Image.GestureRecognizers>
+       					 <TapGestureRecognizer Command="{Binding GetChemImageCommand}" CommandParameter="{Binding ChemId}"/>
+   						 </Image.GestureRecognizers>
+						</Image>
+							</StackLayout>
+							<StackLayout Padding="8" Grid.Row="0" Grid.Column="1">	
+
+						<Label Text="{Binding ChemName}" LineBreakMode="TailTruncation" FontSize="15"  TextColor="#eb3c96"  >
+						<Label.GestureRecognizers>
+       					 <TapGestureRecognizer Command="{Binding GetItemDetailCommand}" CommandParameter="{Binding ChemId}"/>
+   						 </Label.GestureRecognizers>
+								</Label>
+
+
+								<BoxView HeightRequest="1" Margin="0,5,0,5" BackgroundColor="#F0F0F0" HorizontalOptions="FillAndExpand"></BoxView>    
+									</StackLayout>
+							</Grid>
+							</StackLayout>
+
+						</ViewCell>
+                   
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+			</ListView>
+		</StackLayout>
+		<StackLayout Padding="5" IsVisible="{Binding IsRecentVisible}">
+				<StackLayout Padding="5"  BackgroundColor="White">	
+		    <Label  x:Name="lblRecentSearch" Text="{Binding RecentItemText}" TextColor="#eb3c96"  FontSize="15"  IsVisible="{Binding IsRecentVisible}" ></Label>
+  			<ListView x:Name="RecentItemList" ItemTapped="Handle_RecentItemTapped"  IsVisible="{Binding IsRecentVisible}"
+					ItemsSource="{Binding RecentItemsList}" SeparatorColor="#F0F0F0">
+					<ListView.ItemTemplate>
+						<DataTemplate>		
+								<ViewCell>
+									<StackLayout Padding="5,0,5,0" Orientation="Horizontal" VerticalOptions="Center">
+								<Image Source="Search.png" HeightRequest="15" WidthRequest="15" ></Image>
+									<Label Text="{Binding .}" FontSize="12" HorizontalOptions="FillAndExpand"></Label>
+									<Image Source="Cross.png" HeightRequest="15" WidthRequest="15" HorizontalOptions="End">
+									<Image.GestureRecognizers>
+       								 <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand, Source={x:Reference RecentItemList}}" CommandParameter="{Binding .}" />
+   									 </Image.GestureRecognizers>
+									</Image>
+									</StackLayout>
+								</ViewCell>
+						</DataTemplate>
+							</ListView.ItemTemplate>
+					</ListView>
+			</StackLayout>
+			</StackLayout>
+		</StackLayout>
+	</ScrollView>
+	</ContentPage.Content>
+</ContentPage>
